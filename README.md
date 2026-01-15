@@ -1,16 +1,48 @@
-# React + Vite
+# cocktails_gsap
+Create Vite + React Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+1) npm create vite@latest
+Choose:
+Framework: React
+Variant: JavaScript
 
-Currently, two official plugins are available:
+2) Delete:
+src/App.jsx
+src/App.css
+src/assets/ (entire folder)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Clean index.css
 
-## React Compiler
+3)Recreate App.jsx
+Create a new src/App.jsx:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+const App = () => {
+  return (
+    <div>App</div>
+  );
+};
 
-## Expanding the ESLint configuration
+export default App;
+(rafce shortcut = React Arrow Function Component Export)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+4)New Terminal
+npm instal  gsap @gsap/react react-responsive
+
+5)import ScrollTrigger,... and Register
+import { ScrollTrigger, SplitText } from 'gsap/all';
+
+//because these GAP plugins aren't automatically active. 
+// You have to register them. And this line makes sure
+// that both plugins are ready to use globally across your application.
+gsap.registerPlugin(ScrollTrigger, SplitText);
+
+6) Install Tailwind CSS (Vite)
+   npm install @tailwindcss/vite
+
+   vite.config.js folder => plugins:
+   // https://vite.dev/config/
+  export default defineConfig({
+      plugins: [react(), tailwindcss()],
+  })
+
+7) index.css => @import "tailwindcss";

@@ -1,9 +1,15 @@
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/all';
-import React from 'react'
+import  { useRef } from 'react'
 import gsap from 'gsap';
+import { useMediaQuery } from 'react-responsive';
 
 const Hero = () => {
+
+  // variables for video animation
+  const videoRef = useRef();    //Refs allow you to directly access and manipulate DOM elements or store mutable values that persist across re-renders.
+  const isMobile = useMediaQuery({ maxWidth: 767 }); // Check if the device width is 767px or less
+
   useGSAP( () => {
     // use the split text gap plugin that'll break our text into smaller pieces so we can animate them individually
     const heroSplit = new SplitText(".title", { type: "chars, words"});    // Split the text into characters and words
@@ -52,6 +58,37 @@ const Hero = () => {
     .to(".right-leaf", { y:200 }, 0 )  //The 0 means both animations start at the same time (at position 0 in the timeline).
     .to(".left-leaf", {y: -200 }, 0 )
 
+    // video scroll animation
+    const startValue = isMobile ? "top 50%" : "center 60%";  // First value is the element position, second is the viewport position, when the top of the video reaches 50% down the screen,
+    const endValue = isMobile ? "120% top" : "bottom top";  //when the top of the video goes 120% past the top of the screen, meaning far off the screen
+  //when the bottom of the video reaches the top of the screen
+
+    let tl = gsap.timeline ( {
+      scrollTrigger: {
+        trigger: "video",
+        start: startValue,
+        end: endValue,
+        scrub: true,  //video will play on scroll
+        pin: true,   //pin the video in place while scrolling, stuck in place
+      }
+    })
+
+   videoRef.current.onloadedmetadata = () => {
+	    tl.to(videoRef.current, {
+		      currentTime: videoRef.current.duration,
+	 });
+   //1. videoRef.current.onloadedmetadata
+      //This is an event listener that fires when the video's metadata loads
+      //Metadata includes: duration, dimensions, frame rate, etc.
+      //We wait for this because we need to know the video's total duration
+  //2.  tl.to(videoRef.current, { currentTime: videoRef.current.duration })
+          //This creates a GSAP animation that:
+          //Animates the video's currentTime property
+          //From: 0 (start of video)
+          //To: videoRef.current.duration (end of video)
+          //Controlled by: ScrollTrigger (because tl has scrub: true)
+	};
+
   }, []);     // Empty dependency array means this runs only once when component mounts
 
   return (
@@ -93,6 +130,16 @@ const Hero = () => {
         </div>
 
       </section>
+
+      <div className="video absolute inset-0">
+        <video 
+        ref = {videoRef}
+        src="/videos/output.mp4"
+        muted
+        playsInline  //not to show trackbar
+        preload = "auto"  //load automatically
+        />
+      </div>
     </>
   )
 }

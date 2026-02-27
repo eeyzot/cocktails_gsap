@@ -7,6 +7,7 @@ import Cocktails from './components/Cocktails';
 import About from './components/About';
 import Art from './components/Art';
 import Menu from './components/Menu';
+import Contact from './components/Contact';
 
 
 //because these GAP plugins aren't automatically active. 
@@ -23,6 +24,8 @@ const App = () => {
       <About />
       <Art />
       <Menu />
+      <Contact />
+
     </main>
   )
 }

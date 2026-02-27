@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { allCocktails } from '../../constants/index.js';
 import { useGSAP } from '@gsap/react';
 import gsap from "gsap";
@@ -13,7 +13,7 @@ function Menu() {
         gsap.fromTo(".details h2", {yPercent: 100, opacity:0}, {yPercent:0, opacity:100, ease: "power1.inOut"})
         gsap.fromTo(".details p", {yPercent: 100, opacity:0}, {yPercent:0, opacity:100, ease: "power1.inOut"})
 
-        
+
     },[currentIndex])                // whenever currentIndex which means current cocktail changes, animation will rerun
 
     const totalCocktails = allCocktails.length;
